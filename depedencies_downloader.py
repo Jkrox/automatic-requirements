@@ -9,14 +9,21 @@ def installed_packages() -> list:
 
 
 def checker_packages(packages_list: list):
-    with open('requirements.txt', encoding='UTF-8', mode='+rt') as file:
+    with open('./requirements.txt', encoding='UTF-8', mode='+rt') as file:
         ordened_packages = [i.replace('\n','').strip() for i in file.readlines()]
         for request in ordened_packages:
             if request in packages_list:
                 print('- %s installed ✅\n' %request)
             elif request not in packages_list:
-                print('- %s NOT installed ❌\n' %request)
-                os.system("pip install %s" % request)
+                try:
+                    print('- %s NOT installed ❌\n' %request)
+                    os.system("pip install %s" % request)
+                except SystemError as SE:
+                    print('%s causing exit ⚠'%SE)
+                    try:    
+                        os.system("py -m pip install %s" %request)
+                    except:
+                        os.system("python -m pip install %s" %request)
             else:
                 print('An issue found')
             
