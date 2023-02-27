@@ -26,5 +26,6 @@ def checker_packages(packages_list: list):
                         os.system("python -m pip install %s" %request)
             else:
                 print('An issue found')
-            
-checker_packages(packages_list = installed_packages())
+
+if __name__ == "__main__":                
+    checker_packages(packages_list = installed_packages())
